@@ -1,0 +1,20 @@
+let keyword is used to declare a variable
+mut keyword is used to make a keyword mutable
+
+println! calls a Rust macro. If it had called a function instead, it would be entered as println (without the !).For now, you just need to know that using a ! means that you’re calling a macro instead of a normal function and that macros don’t always follow the same rules as functions.
+
+Rust is an ahead-of-time compiled language, meaning you can compile a program and give the executable to someone else, and they can run it even without having Rust installed. If you give someone a .rb, .py, or .js file, they need to have a Ruby, Python, or JavaScript implementation installed (respectively). But in those languages, you only need one command to compile and run your program. Everything is a trade-off in language design.
+
+It has also initialized a new Git repository along with a .gitignore file. Git files won’t be generated if you run cargo new within an existing Git repository; you can override this behavior by using `cargo new --vcs=git`.
+
+// For Cargo.toml
+TOML - Tom's obvious, Minimal language
+
+The first line, [package], is a section heading that indicates that the following statements are configuring a package. As we add more information to this file, we’ll add other sections.
+
+The next three lines set the configuration information Cargo needs to compile your program: the name, the version, and the edition of Rust to use. 
+
+The last line, [dependencies], is the start of a section for you to list any of your project’s dependencies. In Rust, packages of code are referred to as crates.
+// end for Cargo.toml
+
+Cargo also provides a command called cargo check. This command quickly checks your code to make sure it compiles but doesn’t produce an executable:
