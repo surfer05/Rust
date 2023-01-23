@@ -66,3 +66,22 @@ If parse is able to successfully turn the string into a number, it will return a
 
 The underscore, _, is a catchall value; in this example, we’re saying we want to match all Err values, no matter what information they have inside them. So the program will execute the second arm’s code, continue, which tells the program to go to the next iteration of the loop and ask for another guess. So, effectively, the program ignores all errors that parse might encounter!
 
+// Chapter 3: Variables And Mutability
+You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.
+
+Rust’s naming convention for constants is to use all uppercase with underscores between words.
+
+Rustaceans say that the first variable is shadowed by the second, which means that the second variable is what the compiler will see when you use the name of the variable. In effect, the second variable overshadows the first, taking any uses of the variable name to itself until either it itself is shadowed or the scope ends.
+
+Shadowing is different from marking a variable as mut because we’ll get a compile-time error if we accidentally try to reassign to this variable without using the let keyword. By using let, we can perform a few transformations on a value but have the variable be immutable after those transformations have been completed.
+
+The other difference between mut and shadowing is that because we’re effectively creating a new variable when we use the let keyword again, we can change the type of the value but reuse the same name. For example, say our program asks a user to show how many spaces they want between some text by inputting space characters, and then we want to store that input as a number:
+
+    let spaces = "   ";
+    let spaces = spaces.len();
+
+    The first spaces variable is a string type and the second spaces variable is a number type. Shadowing thus spares us from having to come up with different names, such as spaces_str and spaces_num; instead, we can reuse the simpler spaces name. However, if we try to use mut for this, as shown here, we’ll get a compile-time error:
+
+    let mut spaces = "   ";
+    spaces = spaces.len();
+The error says we’re not allowed to mutate a variable’s type.
