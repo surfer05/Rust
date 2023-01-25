@@ -85,3 +85,27 @@ The other difference between mut and shadowing is that because we’re effective
     let mut spaces = "   ";
     spaces = spaces.len();
 The error says we’re not allowed to mutate a variable’s type.
+
+// Chapter 3 : Data Types
+Two subsets : Scalar and Compound
+Scalar -> integers,floating-point , booleans, characters
+integers
+8-bit	i8	u8
+16-bit	i16	u16
+32-bit	i32	u32
+64-bit	i64	u64
+128-bit	i128	u128
+arch	isize	usize
+Additionally, the isize and usize types depend on the architecture of the computer your program is running on, which is denoted in the table as “arch”: 64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit architecture.
+
+Rust’s char type is four bytes in size and represents a Unicode Scalar Value, which means it can represent a lot more than just ASCII. Accented letters; Chinese, Japanese, and Korean characters; emoji; and zero-width spaces are all valid char values in Rust. Unicode Scalar Values range from U+0000 to U+D7FF and U+E000 to U+10FFFF inclusive. However, a “character” isn’t really a concept in Unicode, so your human intuition for what a “character” is may not match up with what a char is in Rust.
+
+Compound -> tuples and arrays
+tuples - fixed length
+The tuple without any values has a special name, unit. This value and its corresponding type are both written () and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value.
+
+arrays - fixed length
+every element of array must have the same type
+
+Statements are instructions that perform some action and do not return a value.
+Expressions evaluate to a resultant value.
