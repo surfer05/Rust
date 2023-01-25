@@ -109,3 +109,79 @@ every element of array must have the same type
 
 Statements are instructions that perform some action and do not return a value.
 Expressions evaluate to a resultant value.
+
+// Chapter 4 : What is ownership?
+A scope is the range within a program for which an item is valid. 
+String literals are immutable. "string literals" are different from "String" data type
+
+You can create a String from a string literal using the from function, like so:
+
+let s = String::from("hello");
+
+example - string x = "5"; // 5 is a string literal
+
+There is a natural point at which we can return the memory our String needs to the allocator: when s goes out of scope. When a variable goes out of scope, Rust calls a special function for us. This function is called `drop`, and it’s where the author of String can put the code to return the memory. Rust calls drop automatically at the closing curly bracket.  
+
+let x = 5;
+let y = x;
+We can probably guess what this is doing: “bind the value 5 to x; then make a copy of the value in x and bind it to y.” We now have two variables, x and y, and both equal 5. This is indeed what is happening, because integers are simple values with a known, fixed size, and these two 5 values are pushed onto the stack.
+
+The length is how much memory, in bytes, the contents of the String are currently using. The capacity is the total amount of memory, in bytes, that the String has received from the allocator. 
+
+If we do want to deeply copy the heap data of the String, not just the stack data, we can use a common method called clone. We’ll discuss method syntax in Chapter 5, but because methods are a common feature in many programming languages, you’ve probably seen them before.
+
+Here’s an example of the clone method in action:
+
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {}, s2 = {}", s1, s2);
+This works just fine.
+
+integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying, and we can leave it out.
+
+Here are some of the types that implement Copy:
+
+All the integer types, such as u32.
+The Boolean type, bool, with values true and false.
+All the floating-point types, such as f64.
+The character type, char.
+Tuples, if they only contain types that also implement Copy. For example, (i32, i32) implements Copy, but (i32, String) does not.
+
+Just as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.
+change(&s); // we can't change string in the function as the reference isn't mutable
+
+but 
+change(&mut s);
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+} 
+this code will allow to change the borrowed reference as we are referencing it as mutable
+
+Mutable references have one big restriction: if you have a mutable reference to a value, you can have no other references to that value. This code that attempts to create two mutable references to s will fail:
+
+This code does not compile!
+    let mut s = String::from("hello");
+
+    let r1 = &mut s;
+    let r2 = &mut s;
+
+    println!("{}, {}", r1, r2);
+
+We can use immutable references more than once for separated variables but it is not possible for mutable references.
+Also, mutable and immutable reference for the same data will not be possible. 
+i.e. 
+let mut s = String::from("hello");
+
+let r1 = &s; // no problem
+let r2 = &s; // no problem
+let r3 = &mut s; // BIG PROBLEM
+
+
+NOTABLE POINTS:
+->At any given time, you can have either one mutable reference or any number of immutable references.
+->References must always be valid.
+
+// Slices 
+Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection. A slice is a kind of reference, so it does not have ownership.
+
